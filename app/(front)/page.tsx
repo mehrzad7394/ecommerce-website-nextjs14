@@ -2,6 +2,7 @@
 import ProductItem from "@/components/products/ProductItem";
 import data from "@/lib/data";
 import productService from "@/lib/services/productService";
+import { convertDocToObj } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -58,8 +59,11 @@ export default async function Home() {
       </div>
       <h2 className="text-2xl py-2">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-          {data?.products?.map((product) => (
-            <ProductItem product={product} key={product.slug} />
+          {latestProducts?.map((product) => (
+            <ProductItem
+              product={convertDocToObj(product)}
+              key={product.slug}
+            />
           ))}
         </div>
       </h2>

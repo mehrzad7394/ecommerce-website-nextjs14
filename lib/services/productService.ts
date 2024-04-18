@@ -19,8 +19,8 @@ const getFeatured = cache(async () => {
 });
 const getBySlug = cache(async (slug: string) => {
   await dbConnect();
-  const products = await ProductModel.find({ slug }).lean();
-  return products as Product[];
+  const products = await ProductModel.findOne({ slug }).lean();
+  return products as Product;
 });
 
 const productService = {
