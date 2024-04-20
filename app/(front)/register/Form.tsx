@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -55,7 +56,11 @@ const Form = () => {
         throw new Error(data?.message ?? "Server error");
       }
     } catch (error: any) {
-      toast.error(error.message || "error");
+      const err =
+        error.message && error.message.indexOf("E11000") === 0
+          ? "Email already in use"
+          : error.message;
+      toast.error(err || "error");
     }
   };
 
@@ -139,12 +144,23 @@ const Form = () => {
             )}
           </div>
           <div className="my-2">
-            <button type="submit" className="btn btn-primary w-full" disabled={isSubmitting}>
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={isSubmitting}
+            >
               {isSubmitting && (
                 <span className="loading loading-spinner"></span>
               )}
               Register
             </button>
+          </div>
+          <div className="divider"></div>
+          <div>
+            Already have an account?{" "}
+            <Link className="link" href={`signin?callbackUrl=${callbackUrl}`}>
+              Login
+            </Link>
           </div>
         </form>
       </div>

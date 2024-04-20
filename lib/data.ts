@@ -1,6 +1,7 @@
-import bcrypt from 'bcryptjs'
+import bcrypt from "bcryptjs";
 
 const data = {
+  paymentTypes: ["PayPal", "CashOnDelivery"],
   users: [
     {
       name: "John",
