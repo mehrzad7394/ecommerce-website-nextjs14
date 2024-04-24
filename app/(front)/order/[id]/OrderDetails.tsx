@@ -4,19 +4,36 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import toast from "react-hot-toast";
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 
 const OrderDetails = ({
   orderId,
-  paypalClientId,
 }: {
   orderId: string;
   paypalClientId?: string;
 }) => {
   const { data: session } = useSession();
+  const { trigger: deliverOrder, isMutating: isDelivering } = useSWRMutation(
+    `/api/orders/${orderId}`,
+    async (url) => {
+      const res = await fetch(`/api/admin/orders/${orderId}/deliver`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      res.ok
+        ? toast.success("Order delivered successfully")
+        : toast.error(data.message);
+    }
+  );
   const { data, error } = useSWR(`/api/orders/${orderId}`);
   if (error) return error.message;
   if (!data) return "loading...";
+
   const {
     paymentMethod,
     shippingAddress,
@@ -130,6 +147,20 @@ const OrderDetails = ({
                     <div>${totalPrice}</div>
                   </div>
                 </li>
+                {session?.user.isAdmin && (
+                  <li>
+                    <button
+                      className="btn w-full my-2"
+                      onClick={() => deliverOrder()}
+                      disabled={isDelivering}
+                    >
+                      {isDelivering && (
+                        <span className="loading loading-spinner"></span>
+                      )}
+                      Mark as delivered
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

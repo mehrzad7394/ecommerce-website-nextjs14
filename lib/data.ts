@@ -1,19 +1,14 @@
 import bcrypt from "bcryptjs";
 
 const data = {
+  themes: { light: "light", dark: "dark" },
   paymentTypes: ["PayPal", "CashOnDelivery"],
   users: [
     {
-      name: "John",
-      email: "admin@example.com",
-      password: bcrypt.hashSync("123456"),
+      name: "mehrzad",
+      email: "mehrzad.ardeshiri@gmail.com",
+      password: bcrypt.hashSync("1"),
       isAdmin: true,
-    },
-    {
-      name: "Jane",
-      email: "user@example.com",
-      password: bcrypt.hashSync("123456"),
-      isAdmin: false,
     },
   ],
   products: [
