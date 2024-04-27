@@ -1,12 +1,11 @@
-import { auth } from "@/lib/auth";
 import dbConnect from "@/lib/dbConnect";
+import { auth } from "@/lib/auth";
 import OrderModel from "@/lib/models/OrderModel";
-import ProductModel from "@/lib/models/ProductModel";
 import UserModel from "@/lib/models/UserModel";
+import ProductModel from "@/lib/models/ProductModel";
 
-export const GET = auth(async (...request: any) => {
-  const [req, { params }] = request;
-  if (!req.auth) {
+export const GET = auth(async (req: any) => {
+  if (!req.auth || !req.auth.user?.isAdmin) {
     return Response.json(
       { message: "unauthorized" },
       {
@@ -14,10 +13,13 @@ export const GET = auth(async (...request: any) => {
       }
     );
   }
+
   await dbConnect();
+
   const ordersCount = await OrderModel.countDocuments();
   const productsCount = await ProductModel.countDocuments();
   const usersCount = await UserModel.countDocuments();
+
   const ordersPriceGroup = await OrderModel.aggregate([
     {
       $group: {
@@ -49,6 +51,7 @@ export const GET = auth(async (...request: any) => {
     },
     { $sort: { _id: 1 } },
   ]);
+
   const usersData = await UserModel.aggregate([
     {
       $group: {
@@ -68,4 +71,4 @@ export const GET = auth(async (...request: any) => {
     productsData,
     usersData,
   });
-});
+}) as any;
