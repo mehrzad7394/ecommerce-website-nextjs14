@@ -5,7 +5,7 @@ import { SearchBox } from "./SearchBox";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 h-[60px] z-10">
+    <header className="fixed top-0 left-0 right-0 header-mobile-height md:header-desktop-height z-10">
       <nav>
         <div className="navbar justify-between bg-base-300">
           <div>
@@ -25,7 +25,7 @@ const Header = () => {
               </svg>
             </label>
             <Link href="/" className="btn btn-ghost text-lg">
-              Next V2
+            Mehrzad`s Shop
             </Link>
           </div>
           <Menu />

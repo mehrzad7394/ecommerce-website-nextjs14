@@ -31,7 +31,7 @@ export default function RootLayout({
               {children}
               <footer className="footer footer-center p-4 bg-base-300 text-base-content">
                 <p>
-                  Copyright © 2023 - All right reserved by{' '}
+                  Copyright © 2024 - All right reserved by{' '}
                   {process.env.NEXT_PUBLIC_APP_NAME || 'Next Shop'}
                 </p>
               </footer>

@@ -30,4 +30,13 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .header-mobile-height {
+    @apply h-[100px];
+  }
+  .header-desktop-height {
+    @apply h-[60px];
+  }
+  .body-margin-mobile {
+    @apply mt-[100px];
+  }
 }

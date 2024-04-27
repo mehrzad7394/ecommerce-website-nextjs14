@@ -3,5 +3,9 @@ export default function FrontLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="flex-grow container mx-auto px-4 mt-[60px]">{children}</main>;
+  return (
+    <main className="flex-grow container mx-auto px-4 body-margin-mobile md:mt-[60px]">
+      {children}
+    </main>
+  );
 }
